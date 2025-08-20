@@ -1,5 +1,5 @@
 export interface Channel {
-  id: string; // uuid
+  id?: string; // uuid
   userId?: string | null; // references users.id
 
   name: string;

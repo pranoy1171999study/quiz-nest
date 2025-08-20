@@ -1,3 +1,4 @@
 <app-channel-select (create)="createRequest()" (view)="viewRequest($event)"></app-channel-select>
-<app-channel-view *ngIf="mode === ChannelMode.VIEW" [channel_data]="channelData"></app-channel-view>
+<app-channel-view *ngIf="mode === ChannelMode.VIEW" [channel_data]="channelData" (onEditRequest)="editRequest($event)"></app-channel-view>
 <app-channel-create *ngIf="mode === ChannelMode.CREATE"></app-channel-create>
+<app-channel-edit *ngIf="mode === ChannelMode.EDIT && channelData" [channel]="channelData" (onEditSuccessful)="viewRequest($event)"></app-channel-edit>

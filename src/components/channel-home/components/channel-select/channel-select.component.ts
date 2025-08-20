@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Channel } from '../../../../core/models/channel-models';
 import { ChannelApiService } from '../../../../services/channel-api-services';
+import { ShowImageService } from '../../../../services/showimage.service';
 
 @Component({
   selector: 'app-channel-select',
@@ -17,7 +18,7 @@ export class ChannelSelectComponent implements OnInit {
   channels: Channel[] = [];
   loading:boolean = true;
 
-  constructor(private channelApiService: ChannelApiService) { }
+  constructor(private channelApiService: ChannelApiService, public showImageService:ShowImageService) { }
 
   ngOnInit(): void {
     this.loadScaliton();
@@ -36,7 +37,7 @@ export class ChannelSelectComponent implements OnInit {
   }
 
 
-  selectedChannelId: string | null = null;
+  selectedChannelId: string | null | undefined = null;
 
   selectChannel(channel: Channel) {
     this.selectedChannelId = channel.id;

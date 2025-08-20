@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Channel } from '../../../../core/models/channel-models';
+import { ShowImageService } from '../../../../services/showimage.service';
 
 @Component({
   selector: 'app-channel-view',
@@ -11,4 +12,11 @@ import { Channel } from '../../../../core/models/channel-models';
 })
 export class ChannelViewComponent {
   @Input() channel_data: Channel | null = null;
+  @Output() onEditRequest = new EventEmitter<Channel|null>();
+
+  constructor(public showImageService:ShowImageService){}
+
+  onEditChannel(){
+    this.onEditRequest.emit(this.channel_data);
+  }
 }

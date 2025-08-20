@@ -1,0 +1,90 @@
+<form #form="ngForm" (ngSubmit)="form.valid && onSubmit()"
+  class="max-w-3xl mx-auto p-6 bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border border-zinc-200 dark:border-zinc-800 space-y-6">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+    <h2 class="text-xl font-semibold text-zinc-900 dark:text-zinc-100">
+      Edit Channel
+    </h2>
+  </div>
+
+  <!-- Profile Picture + File Input -->
+  <div class="flex items-center gap-6">
+    <label for="avatarInput" class="relative">
+      <img [src]="avatarPreview || channel.profilePictureUrl || defaultAvatar" alt="Profile"
+        class="h-28 w-28 rounded-full object-cover ring-2 ring-zinc-200 dark:ring-zinc-700 cursor-pointer" />
+      <span
+        class="absolute -bottom-2 -right-2 text-xs px-2 py-1 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 border border-zinc-200 dark:border-zinc-700">
+        Change
+      </span>
+    </label>
+
+    <input id="avatarInput" type="file" accept="image/*" class="hidden" (change)="onAvatarSelected($event)" />
+
+    <div class="text-sm text-zinc-600 dark:text-zinc-400">
+      <p class="font-medium text-zinc-900 dark:text-zinc-100">Profile picture</p>
+      <p>PNG/JPG, up to ~5MB. Square works best.</p>
+    </div>
+  </div>
+
+  <!-- Name -->
+  <div>
+    <label class="block text-sm font-medium mb-1 text-zinc-800 dark:text-zinc-200">Name</label>
+    <input type="text" name="name" [(ngModel)]="channel.name" #name="ngModel" required minlength="3"
+      class="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 px-3 py-2 outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-white"
+      placeholder="e.g., Quiz Nest" />
+    <p *ngIf="name.invalid && (name.dirty || form.submitted)" class="mt-1 text-sm text-red-600">
+      <span *ngIf="name.errors?.['required']">Name is required.</span>
+      <span *ngIf="name.errors?.['minlength']">Name must be at least 3 characters.</span>
+    </p>
+  </div>
+
+  <!-- Handle (locked during edit) -->
+  <div>
+    <label class="block text-sm font-medium mb-1 text-zinc-800 dark:text-zinc-200">Handle</label>
+    <div
+      class="flex rounded-xl border border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800 overflow-hidden opacity-70">
+      <span class="px-3 py-2 text-zinc-500 dark:text-zinc-400 select-none">&#64;</span>
+      <input type="text" name="handle" [(ngModel)]="channel.handle" disabled
+        class="flex-1 px-3 py-2 outline-none bg-transparent text-zinc-600 dark:text-zinc-400" />
+    </div>
+    <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">Handle cannot be changed after creation.</p>
+  </div>
+
+  <!-- Description -->
+  <div>
+    <label class="block text-sm font-medium mb-1 text-zinc-800 dark:text-zinc-200">Description</label>
+    <textarea name="description" [(ngModel)]="channel.description" #description="ngModel" maxlength="300" rows="4"
+      class="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 px-3 py-2 outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-white"
+      placeholder="Update your channel description…"></textarea>
+    <div class="mt-1 flex justify-between text-xs">
+      <span *ngIf="description.invalid && (description.dirty || form.submitted)" class="text-red-600">
+        Description is invalid.
+      </span>
+      <span class="text-zinc-500 dark:text-zinc-400">{{ (channel.description?.length || 0) }}/300</span>
+    </div>
+  </div>
+
+  <!-- Keywords -->
+  <div>
+    <label class="block text-sm font-medium mb-1 text-zinc-800 dark:text-zinc-200">Keywords
+      (comma-separated)</label>
+    <input type="text" name="keywords" [(ngModel)]="keywordsInput" #keywords="ngModel" (blur)="applyKeywords()"
+      placeholder="quiz, math, aptitude"
+      class="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 px-3 py-2 outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-white" />
+    <div class="mt-2 flex flex-wrap gap-2">
+      <span *ngFor="let k of channel.keywords"
+        class="px-2 py-1 text-xs rounded-full border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-200">{{
+        k }}</span>
+    </div>
+  </div>
+
+  <!-- Footer Submit -->
+  <div class="pt-2 flex justify-center items-center">
+    <button type="submit"
+      class="w-full sm:w-auto px-4 py-2 rounded-2xl font-medium shadow-sm border border-zinc-200 dark:border-zinc-700 bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 disabled:opacity-50"
+      [disabled]="form.invalid">
+      Save Changes
+    </button>
+  </div>
+</form>
