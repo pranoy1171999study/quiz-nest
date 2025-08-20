@@ -1,0 +1,16 @@
+<div class="w-full h-full rounded main-div-text">
+    <!-- Text Editor Area -->
+    <div class="w-full h-fit">
+        <angular-editor [(ngModel)]="textInput!.content" [config]="editorConfig">
+        </angular-editor>
+    </div>
+
+    <!-- Button -->
+    <div class="w-full flex justify-center items-center h-[40px]">
+        <button (click)="addText()"
+            class="px-4 py-1 text-white bg-green-600 hover:bg-green-700 rounded text-sm disabled:opacity-50"
+            [disabled]="!textInput?.content?.trim()">
+            Add Text
+        </button>
+    </div>
+</div>

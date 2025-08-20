@@ -1,0 +1,27 @@
+<div *ngIf="getSelectedQuestion() as selectedQuestion" class="w-full min-h-full">
+    <textarea [(ngModel)]="selectedQuestion.questionText" id="message" rows="3"
+        class="w-full text-center common-card-style" style="resize: none;" placeholder="Write a Question..."></textarea>
+    <div class="w-full h-fit flex justify-center items-center mt-16 mb-16">
+        <app-main-media-select-section class="h-fit w-full"></app-main-media-select-section>
+    </div>
+    <div class="w-full grid grid-cols-2 gap-x-6 gap-y-4 items-stretch">
+        <div *ngFor="let option of selectedQuestion.options" class="flex flex-row justify-center items-center relative p-2.5 w-full min-h-[120px] border-[3px] text-sm text-center text-gray-900 bg-gray-50 rounded-lg
+               focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
+               dark:focus:ring-blue-500 dark:focus:border-blue-500" [ngClass]="{
+                'border-blue-600 dark:border-orange-500': selectedQuestion.correctOptionIds.includes(option.id),
+                'border-slate-300': !selectedQuestion.correctOptionIds.includes(option.id)
+            }">
+            <app-option-media-select-section [media]="quizHelperService.getOriginalMediaFormat(option.media)"
+                class="w-full h-full flex justify-center items-center"
+                (mediaChange)="option.media = $event; quizBuilderService.triggerQuestionsChange()">
+            </app-option-media-select-section>
+
+            <button class="h-[70%] max-h-10 aspect-square rounded-[50%] absolute end-2" [ngClass]="{
+                        'bg-green-400': selectedQuestion.correctOptionIds.includes(option.id),
+                        'bg-slate-400': !selectedQuestion.correctOptionIds.includes(option.id)
+                    }"
+                (click)="selectedQuestion.correctOptionIds = decideAndMakeSelectOptions(selectedQuestion.correctOptionIds,option.id); quizBuilderService.triggerQuestionsChange()">
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+.equation-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+.equation-wrapper math-field {
+  transform-origin: center;
+  white-space: nowrap;
+}

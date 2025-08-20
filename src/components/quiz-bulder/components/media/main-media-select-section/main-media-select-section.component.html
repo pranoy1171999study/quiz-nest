@@ -1,0 +1,20 @@
+<div *ngIf="quizHelperService.getOriginalQuestionFormat(quizBulderService.getSelectedQuestion()) as question"
+    class="h-fit w-full flex justify-center items-center relative">
+    <div *ngIf="!question?.media" class="min-h-[200px] aspect-video common-card-style"></div>
+    <app-media-viewer *ngIf="question?.media" class="w-fit h-fit common-card-style min-w-[355.5555px] max-w-[90%] min-h-[100px]"
+        [inputMedia]="question.media">
+    </app-media-viewer>
+    <button
+        (click)="openMediaSelectorBaseMedia(quizHelperService.getOriginalQuestionFormat(quizBulderService.getSelectedQuestion())?.media)"
+        class="absolute h-14 w-14 cursor-pointer flex justify-center items-center rounded-lg">
+        <svg class="w-10 h-10 mb-2" fill="none" viewBox="0 0 24 24">
+            <!-- White outline (thicker) -->
+            <path stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+            <!-- Blue plus sign (normal thickness) -->
+            <path stroke="rgb(59,130,246)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                d="M12 4v16m8-8H4" />
+        </svg>
+    </button>
+
+
+</div>

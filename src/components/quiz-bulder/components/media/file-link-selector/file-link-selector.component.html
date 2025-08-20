@@ -1,0 +1,24 @@
+<div class="w-full h-64">
+    <div
+        class="flex flex-col items-center justify-between p-4 w-full h-full gap-4 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500">
+
+        <!-- URL Input -->
+        <input type="text" [placeholder]="mediaType === MediaType.IMAGE ? 'Paste image URL' : mediaType === MediaType.VIDEO ? 'Paste video URL' : 'Paste image/video URL'"
+            class="w-[80%] p-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-black dark:text-white"
+            [(ngModel)]="fileUrl" />
+
+        <!-- Preview -->
+        <div class="aspect-video h-full rounded overflow-hidden border dark:border-gray-700">
+            <img *ngIf="mediaType === MediaType.IMAGE && isValidMedia" [src]="fileUrl"
+                class="w-full h-full object-contain" />
+            <video *ngIf="mediaType === MediaType.VIDEO && isValidMedia" [src]="fileUrl"
+                class="w-full h-full object-contain" controls></video>
+        </div>
+
+        <!-- Button -->
+        <button class="px-4 py-1 text-white bg-blue-600 hover:bg-blue-700 rounded text-sm disabled:opacity-50"
+            [disabled]="!isValidMedia" (click)="handleAdd()">
+            Add Media
+        </button>
+    </div>
+</div>

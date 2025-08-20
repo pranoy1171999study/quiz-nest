@@ -1,0 +1,22 @@
+<div *ngIf="question && question.type" class="h-fit w-full" (click)="quizBuilderService.setSelectedQuestion(question)">
+    <div *ngIf="quizBuilderService.getSelectedQuestion() as selectedQuestion"
+        class="relative common-card-style-smallnav h-32 w-full rounded-lg border-[3px]" [ngClass]="{
+            'border-blue-600 dark:border-orange-500': selectedQuestion?.id === question.id,
+            'border-slate-300': selectedQuestion?.id !== question.id
+        }">
+        <app-mcq-tile *ngIf="question.type === QuizType.MCQ" [question]="question"></app-mcq-tile>
+        <app-msq-tile *ngIf="question.type === QuizType.MSQ" [question]="question"></app-msq-tile>
+        <app-true-false-tile *ngIf="question.type === QuizType.TrueFalse" [question]="question"></app-true-false-tile>
+
+        <button class="absolute top-0 end-0 p-1 rounded focus:outline-none focus:ring-2"
+            (click)="onRemoveClick($event, question.id)" title="Remove" aria-label="Remove item">
+            <svg class="w-6 h-6 text-white bg-red-600 rounded-full p-1 hover:bg-red-500" fill="none"
+                stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M6 7h12M10 7V4h4v3m-6 4v7a2 2 0 002 2h4a2 2 0 002-2v-7" />
+            </svg>
+        </button>
+
+    </div>
+
+</div>

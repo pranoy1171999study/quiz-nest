@@ -1,0 +1,50 @@
+<!-- Example Angular Layout using Tailwind -->
+<div #quizeditor class="hidden sm:flex sm:flex-row h-[calc(100vh-60px)] w-full bg-gray-200 dark:bg-slate-500 ">
+  <aside class="w-1/4 max-h-full p-2 overflow-scroll hsb border-r-4 border-slate-300 dark:border-black">
+    <app-left-sidebar></app-left-sidebar>
+  </aside>
+  <main class="w-2/4 p-4 border-r-4 border-slate-300 dark:border-black">
+    <app-middle-panel></app-middle-panel>
+  </main>
+  <aside class="w-1/4 p-4">
+    <app-right-sidebar [quizType]="quizType" [editorDiv]="quizeditor"> </app-right-sidebar>
+  </aside>
+</div>
+
+
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~For Mobile View~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<div #quizeditor class="flex flex-col sm:hidden h-[calc(100vh-60px)] w-full">
+  <div class="w-full h-[145px] bg-gray-100 p-2 overflow-y-auto">
+    <app-left-sidebar></app-left-sidebar>
+  </div>
+  <!-- Wrapper -->
+  <div class="flex w-full relative" style="height: calc(100% - 140px);">
+
+    <!-- Main Panel -->
+    <main class="w-full lg:w-2/3 p-4 bg-slate-300 transition-all duration-300">
+      <app-middle-panel></app-middle-panel>
+    </main>
+
+    <!-- Toggle Button -->
+    <button (click)="toggleSidebar()"
+      class="absolute top-2 right-2 z-50 bg-gray-700 dark:bg-slate-100 text-white dark:text-black rounded-full p-2 hover:bg-gray-600 transition"
+      [ngClass]="{ 'right-4': isSidebarOpen, 'right-2': !isSidebarOpen }">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg">
+        <path [attr.d]="isSidebarOpen ? 'M15 19l-7-7 7-7' : 'M9 5l7 7-7 7'" stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+    </button>
+
+    <!-- Right Sidebar -->
+    <div
+      class="fixed top-[140px] right-0 bg-slate-200 dark:bg-slate-500 p-4 w-80 h-[calc(100%-140px)] shadow-lg z-40 transition-transform duration-300"
+      [ngClass]="{ 'translate-x-0': isSidebarOpen, 'translate-x-full': !isSidebarOpen }">
+      <app-right-sidebar [quizType]="quizType" [editorDiv]="quizeditor"></app-right-sidebar>
+    </div>
+  </div>
+
+</div>

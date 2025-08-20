@@ -1,0 +1,17 @@
+<div class="w-full h-full rounded main-div-latex">
+    <div class="w-full h-[calc(100%-40px)]">
+        <math-field #mathField
+            class="border border-gray-300 dark:border-gray-600 rounded p-3 w-full min-h-full max-h-full resize-y overflow-auto"
+            [value]
+            (input)="onMathInput($event)">
+        </math-field>
+    </div>
+
+    <div class="w-full flex justify-center items-center h-[40px]">
+        <button (click)="addLatex()"
+            class="px-4 py-1 text-white bg-blue-600 hover:bg-blue-700 rounded text-sm disabled:opacity-50"
+            [disabled]="!latexInput?.content">
+            Add Latex
+        </button>
+    </div>
+</div>

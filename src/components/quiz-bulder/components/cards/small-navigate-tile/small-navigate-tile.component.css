@@ -1,0 +1,5 @@
+.common-card-style-smallnav {
+  @apply block p-2.5 text-sm text-center text-gray-900 bg-gray-50 rounded-lg
+          focus:ring-blue-500 
+          dark:bg-gray-700  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500;
+}

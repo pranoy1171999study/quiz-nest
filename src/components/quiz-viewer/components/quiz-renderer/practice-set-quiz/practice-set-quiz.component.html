@@ -1,0 +1,31 @@
+<div *ngIf="pages && pages.length > 0; else noPages" class="w-full h-full">
+    <!-- Only show the current page -->
+    <ng-container *ngIf="pages[currentPageIndex] as page" class="w-full h-full">
+        <!-- START PAGE -->
+        <app-starting-page *ngIf="page.pageType === GameQuizPageType.START_PAGE" class="h-full w-full"
+            [pageContent]="getHtmlMedia(page.data)" (start)="nextPage()">
+        </app-starting-page>
+        <!-- Quiz Section-->
+         <app-section-quiz-frame [sectionData]="getQuizSection(page.data)"></app-section-quiz-frame>
+
+        <!-- <div *ngIf="page.pageType === GameQuizPageType.MAIN_QUESTION" class="h-full w-full">
+           <app-game-quiz-frame 
+                (previous)="goToPage(currentPageIndex-1)" 
+                (next)="goToPage(currentPageIndex+1)"
+                (skip)="goToPage(currentPageIndex+1)"
+                [remainingTime]="remainingTime" 
+                [question]="getQuizQuestion(page.data)" >
+            </app-game-quiz-frame>
+        </div> -->
+
+        <!-- LAST PAGE -->
+        <div *ngIf="page.pageType === GameQuizPageType.LAST_PAGE" class="h-full w-full">
+            <h2>Thank you for playing!</h2>
+            <a routerLink="/leaderboard">Go to Leaderboard</a>
+        </div>
+    </ng-container>
+</div>
+
+<ng-template #noPages>
+    <p>No pages to display.</p>
+</ng-template>

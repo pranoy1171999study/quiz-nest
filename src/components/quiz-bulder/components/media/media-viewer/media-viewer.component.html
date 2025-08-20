@@ -1,0 +1,46 @@
+<div *ngIf="media" class="w-full h-full overflow-hidden">
+    <!-- Image -->
+    <img 
+        *ngIf="media.type === MediaType.IMAGE" 
+        [src]="media.url" 
+        class="w-full h-full object-fill"/>
+
+    <!-- Video -->
+    <video 
+        *ngIf="media.type === MediaType.VIDEO" 
+        [src]="media.url" 
+        class="w-full h-full object-contain"
+        controls></video>
+
+    <!-- LaTeX -->
+    <math-field 
+        *ngIf="media.type === MediaType.LATEX" 
+        class="w-full h-full min-h-full min-w-full text-black dark:text-white hsb"
+        [value]="media.content || ''" read-only 
+        style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            --math-field-font-size: 1.5rem;
+            width: 100% !important;
+            height: 100% !important;
+            overflow-x: scroll;
+            min-height: 100% !important;
+            background-color: transparent;
+            ">
+    </math-field>
+
+    <!-- YouTube -->
+    <iframe 
+        *ngIf="media.type === MediaType.YOUTUBE" 
+        class="w-full h-full" 
+        [src]="safeUrl" 
+        frameborder="0"
+        allow="autoplay; encrypted-media" 
+        allowfullscreen>
+    </iframe>
+    <div *ngIf="media.type === MediaType.YOUTUBE"></div>
+    <div *ngIf="media.type === MediaType.HTML" [innerHtml]="safeHtml"
+        class="w-full h-full flex justify-center items-center bg-transparent text-black dark:text-white"></div>
+</div>

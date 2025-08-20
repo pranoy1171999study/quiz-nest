@@ -1,0 +1,45 @@
+<div class="w-full h-fit flex flex-col justify-between min-h-[100%]">
+    <div *ngIf="tfQuestion?.questionText" [innerText]="tfQuestion?.questionText"
+        class="w-full h-fit p-4 text-wrap text-center font-semibold text-black dark:text-white"></div>
+    <div *ngIf="tfQuestion?.media"
+        class="w-full h-fit flex justify-center items-center p-4 text-wrap text-center font-semibold text-black dark:text-white">
+        <app-media-view-fullscreen [inputMedia]="tfQuestion?.media"
+            class="h-full w-full max-w-[70%]"></app-media-view-fullscreen>
+    </div>
+    <div
+        class="w-full h-fit grid grid-cols-1 sm:grid-cols-2 grid-rows-2 sm:grid-rows-1 gap-4 sm:gap-10 sm:p-4 sm:px-10">
+        <div class="col-span-1 row-span-1 flex items-center">
+            <div class="flex items-center space-x-2 mr-2 sm:mr-4">
+                <input type="radio" 
+                    [value]="true" 
+                    [(ngModel)]="selectedOption" 
+                    (change)="tryAutoSubmit(true)"
+                    [class.pointer-events-none]="questionSubmitted"
+                    class="accent-blue-500 sm:h-5 sm:w-5" />
+            </div>
+            <div class="w-full flex justify-center items-center aspect-[4] bg-green-500 rounded-lg overflow-hidden font-semibold text-white">
+                True
+            </div>
+        </div>
+        <div class="col-span-1 row-span-1 flex items-center">
+            <div class="flex items-center space-x-2 mr-2 sm:mr-4">
+                <input type="radio" 
+                    [value]="false" 
+                    [(ngModel)]="selectedOption" 
+                    (change)="tryAutoSubmit(false)"
+                    [class.pointer-events-none]="questionSubmitted"
+                    class="accent-blue-500 sm:h-5 sm:w-5" />
+            </div>
+            <div class="w-full flex justify-center items-center aspect-[4] bg-red-500 rounded-lg overflow-hidden font-semibold text-white">
+                False
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!autoSubmit" class="w-full flex justify-center items-center p-4 pb-8">
+        <button (click)="submitAnswer()"
+            [disabled]="selectedOption == null"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-md shadow">
+            Submit
+        </button>
+    </div>
+</div>

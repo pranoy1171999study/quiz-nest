@@ -1,0 +1,81 @@
+<div class="p-6 rounded-2xl transition-colors max-w-xl mx-auto">
+
+  <!-- ✅ Skeleton Loader -->
+  <div *ngIf="!channel_data" class="flex flex-col items-center space-y-4 animate-pulse">
+    <!-- Profile Image -->
+    <div class="w-24 h-24 rounded-full bg-gray-300 dark:bg-gray-700"></div>
+
+    <!-- Name + Verified Badge -->
+    <div class="h-6 w-40 bg-gray-300 dark:bg-gray-700 rounded"></div>
+
+    <!-- Handle -->
+    <div class="h-4 w-24 bg-gray-300 dark:bg-gray-700 rounded"></div>
+
+    <!-- Stats (3 columns) -->
+    <div class="flex justify-center gap-8 text-center w-full">
+      <div class="space-y-2">
+        <div class="h-5 w-12 bg-gray-300 dark:bg-gray-700 rounded mx-auto"></div>
+        <div class="h-3 w-16 bg-gray-300 dark:bg-gray-700 rounded mx-auto"></div>
+      </div>
+      <div class="space-y-2">
+        <div class="h-5 w-12 bg-gray-300 dark:bg-gray-700 rounded mx-auto"></div>
+        <div class="h-3 w-16 bg-gray-300 dark:bg-gray-700 rounded mx-auto"></div>
+      </div>
+      <div class="space-y-2">
+        <div class="h-5 w-12 bg-gray-300 dark:bg-gray-700 rounded mx-auto"></div>
+        <div class="h-3 w-16 bg-gray-300 dark:bg-gray-700 rounded mx-auto"></div>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="h-16 w-full bg-gray-300 dark:bg-gray-700 rounded"></div>
+  </div>
+
+  <!-- ✅ Real Data -->
+  <div *ngIf="channel_data !== null" class="flex flex-col items-center space-y-4">
+    <div class="relative">
+      <img [src]="channel_data.profilePictureUrl" alt="Profile"
+        class="w-24 h-24 rounded-full border-4 border-gray-200 dark:border-gray-700 shadow-md" />
+    </div>
+
+    <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 text-center flex items-center justify-center gap-2">
+      {{ channel_data.name }}
+      <span *ngIf="channel_data.isVerified" class="text-blue-400 rounded-full p-0 text-xs shadow" title="Verified">
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+          viewBox="0 0 20 20">
+          <path fill="currentColor"
+            d="m18.774 8.245-.892-.893a1.5 1.5 0 0 1-.437-1.052V5.036a2.484 2.484 0 0 0-2.48-2.48H13.7a1.5 1.5 0 0 1-1.052-.438l-.893-.892a2.484 2.484 0 0 0-3.51 0l-.893.892a1.5 1.5 0 0 1-1.052.437H5.036a2.484 2.484 0 0 0-2.48 2.481V6.3a1.5 1.5 0 0 1-.438 1.052l-.892.893a2.484 2.484 0 0 0 0 3.51l.892.893a1.5 1.5 0 0 1 .437 1.052v1.264a2.484 2.484 0 0 0 2.481 2.481H6.3a1.5 1.5 0 0 1 1.052.437l.893.892a2.484 2.484 0 0 0 3.51 0l.893-.892a1.5 1.5 0 0 1 1.052-.437h1.264a2.484 2.484 0 0 0 2.481-2.48V13.7a1.5 1.5 0 0 1 .437-1.052l.892-.893a2.484 2.484 0 0 0 0-3.51Z" />
+          <path fill="#fff"
+            d="M8 13a1 1 0 0 1-.707-.293l-2-2a1 1 0 1 1 1.414-1.414l1.42 1.42 5.318-3.545a1 1 0 0 1 1.11 1.664l-6 4A1 1 0 0 1 8 13Z" />
+        </svg>
+      </span>
+    </h2>
+
+    <p class="text-sm text-gray-500 dark:text-gray-400">{{ channel_data.handle }}</p>
+
+    <div class="flex justify-center gap-8 text-center">
+      <div>
+        <p class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          {{ channel_data.subscriberCount | number }}
+        </p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Subscribers</p>
+      </div>
+      <div>
+        <p class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          {{ channel_data.quizCount | number }}
+        </p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Quizes</p>
+      </div>
+      <div>
+        <p class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          {{ channel_data.viewCount | number }}
+        </p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Views</p>
+      </div>
+    </div>
+
+    <p class="mt-4 text-center text-gray-600 dark:text-gray-300 leading-relaxed">
+      {{ channel_data.description }}
+    </p>
+  </div>
+</div>

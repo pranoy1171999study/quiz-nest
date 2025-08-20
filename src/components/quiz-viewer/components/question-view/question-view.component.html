@@ -1,0 +1,20 @@
+<div *ngIf="question" class="h-full w-full overflow-y-auto">
+    <app-mcq-view 
+        *ngIf="question.type === QuestionType.MCQ" 
+        [question]="question"
+        [autoSubmit]="true"
+        [showResult]="showResult"
+        (onQuestionSubmit)="onQuestionSubmit.emit($event)">
+    </app-mcq-view>
+    <app-msq-view *ngIf="question.type === QuestionType.MSQ" 
+        [question]="question"
+        [showResult]="showResult"
+        (onQuestionSubmit)="onQuestionSubmit.emit($event)">
+    </app-msq-view>
+    <app-true-false-view *ngIf="question.type === QuestionType.TrueFalse" 
+        [question]="question"
+        [autoSubmit]="true"
+        [showResult]="showResult"
+        (onQuestionSubmit)="onQuestionSubmit.emit($event)">
+    </app-true-false-view>
+</div>

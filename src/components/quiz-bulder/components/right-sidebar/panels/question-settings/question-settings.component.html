@@ -1,0 +1,36 @@
+<div class="h-fit w-full">
+    <form class="max-w-sm mx-auto" *ngIf="quizBuilderService.getSelectedQuestion() as selectedQuestion">
+        <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Question
+            Type</label>
+        <select id="countries"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+            [value]="quizBuilderService.getSelectedQuestionType()" (change)="onQuestionTypeChange($event)">
+            <option *ngFor="let questionType of questionTypes" [value]="questionType">{{questionType}}</option>
+        </select>
+
+        <label *ngIf="quizType === QuizType.GAME" for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Question
+            Media Preview(sec)</label>
+        <input *ngIf="quizType === QuizType.GAME" type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
+            focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
+            dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
+            dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            [value]="selectedQuestion?.mediaDisplayTimeSec"
+            (change)="selectedQuestion.mediaDisplayTimeSec = +$any($event.target).value" min="-1" max="120" />
+
+        <label *ngIf="quizType === QuizType.GAME" for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Question
+            Max Time(sec)</label>
+        <input *ngIf="quizType === QuizType.GAME" type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
+            focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
+            dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
+            dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" [value]="selectedQuestion?.maxTimeSec"
+            (change)="selectedQuestion.maxTimeSec = +$any($event.target).value" min="-1" max="120" />
+
+        <label *ngIf="quizType === QuizType.GAME" for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Question
+            Marks</label>
+        <input *ngIf="quizType === QuizType.GAME" type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
+            focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
+            dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
+            dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" [value]="selectedQuestion?.marks"
+            (change)="selectedQuestion.marks = +$any($event.target).value" min="1" max="10" />
+    </form>
+</div>

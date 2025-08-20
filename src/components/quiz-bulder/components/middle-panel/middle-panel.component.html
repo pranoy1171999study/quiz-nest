@@ -1,0 +1,15 @@
+<div *ngIf="quizBuilderService.getSelectedQuestionType() as selectedType" class="h-full w-full overflow-scroll hsb">
+    <app-mcq-middle-panel *ngIf="selectedType === QuestionType.MCQ"></app-mcq-middle-panel>
+    <app-msq-middle-panel *ngIf="selectedType === QuestionType.MSQ"></app-msq-middle-panel>
+    <app-true-false-middle-panel *ngIf="selectedType === QuestionType.TrueFalse"></app-true-false-middle-panel>
+</div>
+<div *ngIf="!quizBuilderService.getSelectedQuestionType()" 
+     class="h-full w-full flex flex-col items-center justify-center overflow-scroll hsb px-4 text-center">
+  <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-900">
+    No Question Selected
+  </h2>
+  <p class="mt-2 text-gray-500 dark:text-gray-700 max-w-md">
+    Please select a question to proceed.
+  </p>
+</div>
+

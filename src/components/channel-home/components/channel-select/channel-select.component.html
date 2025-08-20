@@ -1,0 +1,62 @@
+<div class="w-full overflow-x-auto hsb">
+  <div class="flex space-x-6 p-4">
+    
+    <!-- 🔹 Skeleton Loader (Visible when loading = true) -->
+    <ng-container *ngIf="loading; else channelList">
+      <!-- Repeat until it fills the screen width -->
+      <div 
+        *ngFor="let i of skeletonArray"  
+        class="flex flex-col items-center animate-pulse">
+        
+        <!-- Circle placeholder -->
+        <div class="w-20 h-20 rounded-full bg-gray-300 dark:bg-gray-700"></div>
+        
+        <!-- Text placeholder -->
+        <div class="mt-2 h-4 w-16 bg-gray-300 dark:bg-gray-700 rounded"></div>
+      </div>
+    </ng-container>
+
+    <!-- 🔹 Channel List (Visible when loading = false) -->
+    <ng-template #channelList>
+      <!-- Show fetched channels -->
+      <div 
+        *ngFor="let channel of channels" 
+        class="flex flex-col items-center cursor-pointer"
+        (click)="selectChannel(channel)">
+        
+        <!-- Circle Profile Image -->
+        <div 
+          class="w-20 h-20 rounded-full overflow-hidden border-4 transition-all"
+          [ngClass]="
+            selectedChannelId === channel.id
+              ? 'border-blue-500 dark:border-amber-500'
+              : 'border-transparent dark:border-gray-600'
+          ">
+          <img [src]="channel.profilePictureUrl" [alt]="channel.name" class="w-full h-full object-cover" />
+        </div>
+
+        <!-- Channel Name -->
+        <p class="mt-2 text-sm font-medium text-gray-700 dark:text-gray-300 truncate w-20 text-center">
+          {{ channel.name }}
+        </p>
+      </div>
+
+      <!-- ➕ Create New Channel (Shown only after loading is finished) -->
+      <div class="flex flex-col items-center cursor-pointer">
+        <div 
+          (click)="emitCreateChannel()"
+          class="w-20 h-20 flex items-center justify-center rounded-full border-4 border-dashed border-green-500 text-green-500 hover:border-green-700 hover:text-green-700 transition">
+          
+          <!-- Plus Icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="size-10">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+          </svg>
+        </div>
+        <p class="mt-2 text-sm font-medium text-green-500 truncate w-20 text-center">
+          Create
+        </p>
+      </div>
+    </ng-template>
+  </div>
+</div>

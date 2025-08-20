@@ -1,0 +1,20 @@
+<div class="h-fit w-full flex justify-center items-center relative aspect-video">
+    <!-- <app-media-viewer class="w-full h-full max-w-[90%]" *ngIf="media" [inputMedia]="media"></app-media-viewer> -->
+     <app-media-viewer 
+  class="w-fit h-fit max-w-[90%] max-h-full" 
+  style="object-fit: contain;" 
+  *ngIf="media" 
+  [inputMedia]="media">
+</app-media-viewer>
+
+    <button (click)="openMediaSelectorBaseMedia(media)"
+        class="absolute h-14 w-14 cursor-pointer flex justify-center items-center rounded-lg">
+        <svg class="w-10 h-10 mb-2" fill="none" viewBox="0 0 24 24">
+            <!-- White outline (thicker) -->
+            <path stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+            <!-- Blue plus sign (normal thickness) -->
+            <path stroke="rgb(59,130,246)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                d="M12 4v16m8-8H4" />
+        </svg>
+    </button>
+</div>

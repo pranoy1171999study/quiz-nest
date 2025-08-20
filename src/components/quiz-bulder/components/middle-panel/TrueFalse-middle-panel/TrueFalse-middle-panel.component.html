@@ -1,0 +1,36 @@
+<div *ngIf="getSelectedQuestion() as selectedQuestion" class="w-full min-h-full flex flex-col justify-between">
+    <textarea [(ngModel)]="selectedQuestion.questionText" id="message" rows="3"
+        class="w-full text-center common-card-style" style="resize: none;" placeholder="Write a Question..."></textarea>
+
+    <div class="w-full h-fit flex justify-center items-center mt-16 mb-16">
+        <app-main-media-select-section class="h-fit w-full"></app-main-media-select-section>
+    </div>
+    <div class="w-full grid grid-cols-2 gap-x-6 gap-y-4 text-xl font-bold">
+        <div class="bg-green-600 aspect-[4/1] flex flex-row justify-end items-center p-2.5 w-full border-[3px] text-center text-gray-900 rounded-lg  focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            [ngClass]="{
+                'border-blue-600 dark:border-orange-500': selectedQuestion.correctAnswer,
+                'border-slate-300': !selectedQuestion.correctAnswer
+            }">
+            <div class="flex-grow text-white">True</div>
+            <button class="h-[90%] aspect-square rounded-[50%] " [ngClass]="{
+                        'bg-green-400': selectedQuestion.correctAnswer,
+                        'bg-slate-400': !selectedQuestion.correctAnswer
+                    }" (click)="selectedQuestion.correctAnswer = true; quizBuilderService.triggerQuestionsChange()">
+            </button>
+        </div>
+        <div class="bg-red-600 aspect-[4/1] flex flex-row justify-end items-center p-2.5 w-full border-[3px] text-center text-gray-900 rounded-lg  focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            [ngClass]="{
+                'border-blue-600 dark:border-orange-500': !selectedQuestion.correctAnswer,
+                'border-slate-300': selectedQuestion.correctAnswer
+            }">
+            <div class="flex-grow text-white">False</div>
+            <button class="h-[90%] aspect-square rounded-[50%] " [ngClass]="{
+                        'bg-green-400': !selectedQuestion.correctAnswer,
+                        'bg-slate-400': selectedQuestion.correctAnswer
+                    }" (click)="selectedQuestion.correctAnswer = false">
+            </button>
+        </div>
+        <div class="aspect-[4/1]"></div>
+        <div class="aspect-[4/1]"></div>
+    </div>
+</div>

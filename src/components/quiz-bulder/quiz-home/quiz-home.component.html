@@ -1,0 +1,286 @@
+<div class="min-h-screen w-full">
+  <div class="min-h-screen w-full bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-6">
+    <div class="mx-auto space-y-6">
+
+      <!-- Header -->
+      <div class="flex items-center justify-between">
+        <h1 class="text-2xl font-semibold">Quiz Editor</h1>
+      </div>
+
+      <!-- Basic Quiz Info -->
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm mb-1">Title</label>
+          <input class="w-full rounded border px-3 py-2 bg-gray-50 dark:bg-gray-700" [(ngModel)]="quiz.title"
+            (ngModelChange)="saveDraft()" />
+        </div>
+
+        <!-- <div>
+          <label class="block text-sm mb-1">Type</label>
+          <select class="w-full rounded border px-3 py-2 bg-gray-50 dark:bg-gray-700" [(ngModel)]="quiz.type"
+            (ngModelChange)="updateBase('type', $event)">
+            <option *ngFor="let type of quizTypes" [ngValue]="type">{{ type }}</option>
+          </select>
+        </div> -->
+        <div>
+          <label class="text-sm mb-1 flex items-center gap-2">
+            Type
+            <!-- Info Icon -->
+            <span
+              class="relative group cursor-pointer text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+              <!-- SVG Icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+
+              <!-- Tooltip -->
+              <div
+                class="absolute left-5 top-1 z-50 w-72 p-3 rounded-lg shadow-lg bg-white dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700 hidden group-hover:block"
+                [innerHTML]="ToolTips.quiz_type">
+              </div>
+            </span>
+          </label>
+
+          <!-- Dropdown -->
+          <select class="w-full rounded border px-3 py-2 bg-gray-50 dark:bg-gray-700" [(ngModel)]="quiz.type"
+            (ngModelChange)="updateBase('type', $event)">
+            <option *ngFor="let type of quizTypes" [ngValue]="type">{{ type }}</option>
+          </select>
+        </div>
+
+
+        <div class="md:col-span-2">
+          <label class="block text-sm mb-1">Description</label>
+          <textarea class="w-full rounded border px-3 py-2 bg-gray-50 dark:bg-gray-700" [(ngModel)]="quiz.description"
+            placeholder="Write a concise, keyword-rich meta description that accurately reflects the quiz topic to attract the right audience and improve ad relevance."
+            (ngModelChange)="saveDraft()"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-sm mb-1">Created By</label>
+          <input class="w-full rounded border px-3 py-2 bg-gray-50 dark:bg-gray-700" [(ngModel)]="quiz.createdBy"
+            (ngModelChange)="saveDraft()" />
+        </div>
+
+        <div>
+          <label class="block text-sm mb-1">Active</label>
+          <select class="w-full rounded border px-3 py-2 bg-gray-50 dark:bg-gray-700" [(ngModel)]="quiz.isActive"
+            (ngModelChange)="saveDraft()">
+            <option [ngValue]="true">Active</option>
+            <option [ngValue]="false">Inactive</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="text-sm mb-1 flex items-center gap-2">
+            Opens On
+            <!-- Info Icon -->
+            <span
+              class="relative group cursor-pointer text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+              <!-- SVG Icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+
+              <!-- Tooltip -->
+              <div
+                class="absolute left-5 top-1 z-50 w-72 p-3 rounded-lg shadow-lg bg-white dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700 hidden group-hover:block"
+                [innerHTML]="ToolTips.quiz_start_date">
+              </div>
+            </span>
+          </label>
+          <input type="datetime-local" class="w-full rounded border px-3 py-2 bg-gray-50 dark:bg-gray-700"
+            [(ngModel)]="quiz.startDate" (ngModelChange)="saveDraft()" />
+        </div>
+
+        <div>
+          <label class="text-sm mb-1 flex items-center gap-2">
+            Closes For New Starts
+            <!-- Info Icon -->
+            <span
+              class="relative group cursor-pointer text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+              <!-- SVG Icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+
+              <!-- Tooltip -->
+              <div
+                class="absolute left-5 top-1 z-50 w-72 p-3 rounded-lg shadow-lg bg-white dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700 hidden group-hover:block"
+                [innerHTML]="ToolTips.quiz_expiry_date">
+              </div>
+            </span>
+          </label>
+          <input type="datetime-local" class="w-full rounded border px-3 py-2 bg-gray-50 dark:bg-gray-700"
+            [(ngModel)]="quiz.expiryDate" (ngModelChange)="saveDraft()" />
+        </div>
+      </div>
+
+      <!-- Starting Page Section -->
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-4">
+        <h2 class="text-lg font-medium">Starting Page</h2>
+        <p class="mb-3 text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+          This page will be displayed at the beginning of the quiz. You can use it to white-label the quiz experience by
+          replacing the default starting page with your own branded content, or include promotional material for your
+          organization or partners. Simply provide a custom HTML page to personalize the look and feel.
+        </p>
+        <!-- No starting page yet -->
+        <div *ngIf="!quiz.startingPage" class="w-full flex justify-end">
+          <button (click)="openMediaSelectorForStartingPage();" class="px-4 py-2 w-28 rounded font-medium
+           bg-green-500 text-white hover:bg-green-600 
+           dark:bg-green-600 dark:hover:bg-green-700
+           transition-colors">
+            Add
+          </button>
+        </div>
+
+        <!-- Editor when starting page exists -->
+        <div *ngIf="quiz.startingPage !== null">
+          <label class="block text-sm mb-1">Custom HTML</label>
+          <!-- Preview -->
+          <div class="mt-4">
+            <label class="block text-sm mb-1">Preview</label>
+            <div class="border rounded p-4 bg-gray-50 dark:bg-gray-700 w-full max-h-[100vh] overflow-scroll">
+              <app-html-viewer [htmlContent]="quiz.startingPage.content"></app-html-viewer>
+            </div>
+          </div>
+
+          <div class="w-full h-fit flex items-center justify-end mt-6 gap-4">
+            <button (click)="openMediaSelectorForStartingPage();" class="px-4 py-2 w-28 rounded font-medium
+           bg-blue-500 text-white hover:bg-blue-600 
+           dark:bg-blue-600 dark:hover:bg-blue-700
+           transition-colors">
+              Edit
+            </button>
+            <button (click)="removeStartingPage();" class="px-4 py-2 w-28 rounded font-medium
+           bg-red-500 text-white hover:bg-red-600 
+           dark:bg-red-600 dark:hover:bg-red-700 
+           transition-colors">
+              Remove
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- Game Mode (Single Section) -->
+      <div *ngIf="quiz.type === QuizType.GAME" class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-4">
+        <h2 class="text-lg font-medium">Game Section</h2>
+        <div class="p-3 rounded border bg-gray-50 dark:bg-gray-700 space-y-2">
+          <!-- <input class="w-full rounded border px-3 py-2 bg-gray-50 dark:bg-gray-700" [(ngModel)]="sections[0].title"
+            (ngModelChange)="saveDraft()" placeholder="Section Title" />
+          <textarea class="w-full rounded border px-3 py-2 bg-gray-50 dark:bg-gray-700"
+            [(ngModel)]="sections[0].description" (ngModelChange)="saveDraft()" placeholder="Description"></textarea> -->
+          <!-- Question Editor for game -->
+          <app-quiz-editor [quizType]="quiz.type" [questions]="sections[0].questions" (onChange)="updateQuestions(0, $event)">
+          </app-quiz-editor>
+
+        </div>
+      </div>
+
+      <!-- CBT Mode (Multiple Sections) -->
+      <div *ngIf="quiz.type === QuizType.PRACTICE_SET"
+        class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-lg font-medium">Practice Set Sections</h2>
+          <button (click)="addSection();" class="px-4 py-2 w-28 rounded font-medium
+           bg-green-500 text-white hover:bg-green-600 
+           dark:bg-green-600 dark:hover:bg-green-700
+           transition-colors">
+            Add
+          </button>
+        </div>
+
+        <div *ngFor="let sec of sections; let i = index"
+          class="p-3 rounded border bg-gray-50 dark:bg-gray-700 space-y-2">
+          <input class="w-full rounded border px-3 py-2 bg-gray-50 dark:bg-gray-700" [(ngModel)]="sec.title"
+            (ngModelChange)="saveDraft()" placeholder="Section Title" />
+          <textarea class="w-full rounded border px-3 py-2 bg-gray-50 dark:bg-gray-700" [(ngModel)]="sec.description"
+            (ngModelChange)="saveDraft()"
+            placeholder="Write a concise, keyword-rich meta description that accurately reflects the quiz topic to attract the right audience and improve ad relevance."></textarea>
+
+
+          <!-- Disclaimer Section -->
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 space-y-3">
+            <h3 class="text-md font-medium">Section Disclaimer</h3>
+            <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+              This page will be shown before the section begins. You can use it to outline important
+              instructions, marking schemes, negative marking rules, or any other guidelines for the participant.
+              Provide your own HTML content to customize it.
+            </p>
+
+            <!-- If no disclaimer -->
+            <div *ngIf="!sec.disclaimer" class="w-full flex justify-end">
+              <button (click)="openDisclaimerEditor(i)" class="px-4 py-2 w-28 rounded font-medium
+               bg-green-500 text-white hover:bg-green-600 
+               dark:bg-green-600 dark:hover:bg-green-700
+               transition-colors">
+                Add
+              </button>
+            </div>
+
+            <!-- If disclaimer exists -->
+            <div *ngIf="sec.disclaimer">
+              <label class="block text-sm mb-1">Preview</label>
+              <div class="border rounded p-4 bg-gray-50 dark:bg-gray-700 w-full max-h-[100vh] overflow-scroll"
+                [innerHTML]="getSanitizeHtml(sec.disclaimer.content)">
+              </div>
+
+              <div class="flex justify-end gap-4 mt-3">
+                <button (click)="openDisclaimerEditor(i)" class="px-4 py-2 w-28 rounded font-medium
+                 bg-blue-500 text-white hover:bg-blue-600 
+                 dark:bg-blue-600 dark:hover:bg-blue-700
+                 transition-colors">
+                  Edit
+                </button>
+                <button (click)="removeDisclaimer(i)" class="px-4 py-2 w-28 rounded font-medium
+                 bg-red-500 text-white hover:bg-red-600 
+                 dark:bg-red-600 dark:hover:bg-red-700
+                 transition-colors">
+                  Remove
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Question Editor for this section -->
+          <app-quiz-editor [quizType]="quiz.type" [questions]="sec.questions" (onChange)="updateQuestions(i, $event)">
+          </app-quiz-editor>
+
+          <div class="w-full flex justify-end">
+            <button (click)="removeSection(sec.id)" class="px-4 py-2 w-28 rounded font-medium
+           bg-red-500 text-white hover:bg-red-600 
+           dark:bg-red-600 dark:hover:bg-red-700 
+           transition-colors">
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="w-full h-fit flex items-center justify-end mt-6 gap-4">
+      <button (click)="discardDraft()" class="px-4 py-2 w-28 rounded font-medium
+           bg-red-500 text-white hover:bg-red-600 
+           dark:bg-red-600 dark:hover:bg-red-700 
+           transition-colors">
+        Discard
+      </button>
+
+      <button (click)="saveQuiz()" class="px-4 py-2 w-28 rounded font-medium
+           bg-green-500 text-white hover:bg-green-600 
+           dark:bg-green-600 dark:hover:bg-green-700
+           transition-colors">
+        Save
+      </button>
+    </div>
+
+  </div>
+</div>

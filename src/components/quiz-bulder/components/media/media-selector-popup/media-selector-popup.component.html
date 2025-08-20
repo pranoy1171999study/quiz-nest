@@ -1,0 +1,117 @@
+<div
+    class="h-full max-h-[80vh] w-full max-w-[90vw] md:max-w-[80vw] flex flex-col md:flex-row border-[3px] dark:border-amber-500 rounded-sm overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside [ngClass]="{
+      'w-16': !isSidebarOpen,
+      'w-full md:w-1/4': isSidebarOpen
+    }"
+        class="transition-all duration-300 ease-in-out text-black dark:text-white bg-gray-100 dark:bg-gray-800 p-4 border-b md:border-b-0 md:border-r border-gray-300 relative">
+
+        <!-- Toggle Button -->
+        <button (click)="toggleSidebar()"
+            class="absolute top-2 right-2 z-10 bg-gray-300 dark:bg-gray-700 rounded-full p-1">
+            <svg *ngIf="isSidebarOpen" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            <svg *ngIf="!isSidebarOpen" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+
+        <!-- Content -->
+        <div *ngIf="isSidebarOpen">
+            <h2 class="text-lg font-semibold mb-4">Pick Media</h2>
+            <ul class="space-y-2">
+                <li *ngIf="allowedMediaTypes.includes(MediaType.IMAGE)" (click)="selectedMediaType = MediaType.IMAGE">
+                    <button class="w-full text-left p-2 rounded" [ngClass]="{
+                            'bg-blue-600 dark:bg-amber-600 text-white dark:text-black' : selectedMediaType === MediaType.IMAGE,
+                            'hover:bg-gray-200 dark:hover:bg-gray-700' : selectedMediaType !== MediaType.IMAGE
+                        }">
+                        <!-- Image Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 inline-block mr-2" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11l3 3 5-5" />
+                        </svg>
+                        Image
+                    </button>
+                </li>
+                <li *ngIf="allowedMediaTypes.includes(MediaType.VIDEO)" (click)="selectedMediaType = MediaType.VIDEO">
+                    <button class="w-full text-left hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded" [ngClass]="{
+                            'bg-blue-600 dark:bg-amber-600 text-white dark:text-black' : selectedMediaType === MediaType.VIDEO,
+                            'hover:bg-gray-200 dark:hover:bg-gray-700' : selectedMediaType !== MediaType.VIDEO
+                        }">
+                        <!-- Video Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 inline-block mr-2" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M4 6h11a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2z" />
+                        </svg>
+                        Video
+                    </button>
+                </li>
+                <li *ngIf="allowedMediaTypes.includes(MediaType.YOUTUBE)"
+                    (click)="selectedMediaType = MediaType.YOUTUBE">
+                    <button
+                        class="w-full flex items-center text-left hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded"
+                        [ngClass]="{
+                            'bg-blue-600 dark:bg-amber-600 text-white dark:text-black' : selectedMediaType === MediaType.YOUTUBE,
+                            'hover:bg-gray-200 dark:hover:bg-gray-700' : selectedMediaType !== MediaType.YOUTUBE
+                        }">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 text-red-600" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <rect x="2" y="2" width="20" height="20" rx="4" ry="4" fill="currentColor" />
+                            <polygon points="9,7 16,12 9,17" fill="white" />
+                        </svg>
+                        YouTube
+                    </button>
+                </li>
+                <li *ngIf="allowedMediaTypes.includes(MediaType.LATEX)" (click)="selectedMediaType = MediaType.LATEX">
+                    <button class="w-full flex items-center text-left p-2 rounded" [ngClass]="{
+                'bg-blue-600 dark:bg-amber-600 text-white dark:text-black' : selectedMediaType === MediaType.LATEX,
+                'hover:bg-gray-200 dark:hover:bg-gray-700' : selectedMediaType !== MediaType.LATEX
+            }">
+                        <!-- Math Icon (√ symbol) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path d="M3 12h3l3 8 4-16 3 8h5" stroke="currentColor" stroke-width="2" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        Latex
+                    </button>
+                </li>
+                <li *ngIf="allowedMediaTypes.includes(MediaType.HTML)" (click)="selectedMediaType = MediaType.HTML">
+                    <button class="w-full flex items-center text-left p-2 rounded" [ngClass]="{
+                        'bg-blue-600 dark:bg-amber-600 text-white dark:text-black': selectedMediaType === MediaType.HTML,
+                        'hover:bg-gray-200 dark:hover:bg-gray-700': selectedMediaType !== MediaType.HTML
+                    }">
+                        <!-- Text Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h10M4 14h16M4 18h10" />
+                        </svg>
+                        Rich Text
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <section class="flex-1 p-4 overflow-auto bg-white">
+        <app-media-select-image (filesSelected)="emitSelectedMedia($event)"
+            *ngIf="selectedMediaType === MediaType.IMAGE"></app-media-select-image>
+        <app-media-select-video (filesSelected)="emitSelectedMedia($event)"
+            *ngIf="selectedMediaType === MediaType.VIDEO"></app-media-select-video>
+        <app-media-select-youtube (filesSelected)="emitSelectedMedia($event)"
+            *ngIf="selectedMediaType === MediaType.YOUTUBE"></app-media-select-youtube>
+        <app-media-select-latex [latexInput]="getLatexMedia()" (latexOutput)="emitSelectedMedia($event)"
+            *ngIf="selectedMediaType === MediaType.LATEX"></app-media-select-latex>
+        <app-media-select-text [textInput]="getTextMedia()" (textOutput)="emitSelectedMedia($event)"
+            *ngIf="selectedMediaType === MediaType.HTML"></app-media-select-text>
+    </section>
+</div>

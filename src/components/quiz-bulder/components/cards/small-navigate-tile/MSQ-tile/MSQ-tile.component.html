@@ -1,0 +1,14 @@
+<div *ngIf="getQuestion() as question" class="h-full w-full flex flex-col justify-between items-center">
+    <div class="px-6 py-2 text-center overflow-hidden whitespace-nowrap text-ellipsis truncate w-full">
+        {{question?.questionText}}</div>
+    <div class="h-8 max-w-16 flex justify-center items-center">
+        <img src="/assets/quiznest.png" alt="">
+    </div>
+    <div class="w-full grid grid-cols-2 gap-x-4 gap-y-1.5 px-4 py-2">
+        <div *ngFor="let option of question?.options" class="col-span-1 h-3" 
+        [ngClass]="{
+            'bg-green-400': question?.correctOptionIds?.includes(option.id)  
+        }" style="border: 1.5px solid rgb(84, 84, 84); border-radius: 3px;">
+        </div>
+    </div>
+</div>

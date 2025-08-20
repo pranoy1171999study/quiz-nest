@@ -1,0 +1,9 @@
+.main-container{
+    height: calc(100vh - 65px);
+    width: 100%;
+}
+@media (min-width: 640px) {
+    .main-container{
+        width: calc(100vw - 16rem);
+    }
+}

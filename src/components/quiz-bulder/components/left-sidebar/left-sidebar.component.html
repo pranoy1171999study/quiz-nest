@@ -1,0 +1,11 @@
+<div *ngIf="getQuestions() as questions" class="w-full flex sm:grid sm:grid-cols-1 gap-4">
+    <app-small-navigate-tile class="sm:col-span-1 min-w-52 max-w-52 sm:w-full sm:min-w-full sm:max-w-full" *ngFor="let question of questions" [question]="question"></app-small-navigate-tile>
+    <div (click)="quizBuilderService.addNewSampleQuestion()"
+        class="sm:col-span-1 flex flex-col items-center justify-center h-[125px] min-w-52 max-w-52 sm:w-full sm:min-w-full sm:max-w-full rounded-lg border-2 border-dashed border-gray-400 hover:border-blue-500 hover:bg-blue-50 cursor-pointer transition duration-200 bg-white">
+        <svg class="w-10 h-10 text-blue-500 group-hover:text-blue-500 mb-2" fill="none" stroke="currentColor"
+            stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+        </svg>
+        <span class="text-gray-500 group-hover:text-blue-600 font-medium">Add New Question</span>
+    </div>
+</div>
