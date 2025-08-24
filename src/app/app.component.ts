@@ -2,9 +2,10 @@ import { Component} from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MathfieldElement } from 'mathlive';
+import { ToastrModule } from 'ngx-toastr';
 
 @Component({
-  imports: [RouterModule,FormsModule],
+  imports: [RouterModule,FormsModule,ToastrModule],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

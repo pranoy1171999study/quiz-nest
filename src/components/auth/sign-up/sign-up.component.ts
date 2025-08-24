@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -12,14 +12,22 @@ import { AuthService } from '../auth.service';
 export class SignupComponent {
   email = '';
   password = '';
+  confirmPassword = '';
+  passwordMismatch = false;
   fullName = '';
   error: string | null = null;
-  success:boolean = false;
+  success = false;
   loading = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
-  async onSubmit() {
+  checkPasswords() {
+    this.passwordMismatch = this.password !== this.confirmPassword;
+  }
+
+  async onSubmit(form: NgForm) {
+    if (form.invalid || this.passwordMismatch) return;
+
     this.loading = true;
     this.error = null;
     try {

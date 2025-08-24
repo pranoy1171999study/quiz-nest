@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ShowImageService } from '../../../../services/showimage.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Channel } from '../../../../core/models/channel-models';
 import { ChannelApiService } from '../../../../services/channel-api-services';
 
@@ -14,18 +14,21 @@ import { ChannelApiService } from '../../../../services/channel-api-services';
   styleUrls: ['./channel-edit.component.css']
 })
 export class ChannelEditComponent implements OnInit {
-  @Input() channel!: Channel;
-  @Output() onEditSuccessful = new EventEmitter<Channel>();
-
+  channel!: Channel;
+  originalChannel!: Channel; // keep a copy
   avatarPreview: string | null = null;
+  selectedAvatarFile:File|null = null;
   defaultAvatar = 'https://placehold.co/100x100?text=CH';
+  keywordsInput = '';
 
-  keywordsInput: string = this.channel?.keywords?.length
-    ? this.channel.keywords.join(',')
-    : '';
-
-
-  constructor(private channelApi: ChannelApiService) { }
+  constructor(
+    private channelApi: ChannelApiService,
+    private dialogRef: MatDialogRef<ChannelEditComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Channel // 👈 injected data
+  ) {
+    this.channel = { ...data }; // editable copy
+    this.originalChannel = { ...data }; // backup copy
+  }
 
   ngOnInit() {
     this.keywordsInput = this.channel?.keywords?.length
@@ -33,13 +36,13 @@ export class ChannelEditComponent implements OnInit {
       : '';
   }
 
-
   onAvatarSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       const reader = new FileReader();
       reader.onload = e => (this.avatarPreview = e.target?.result as string);
       reader.readAsDataURL(input.files[0]);
+      this.selectedAvatarFile = input.files[0];
     }
   }
 
@@ -53,20 +56,30 @@ export class ChannelEditComponent implements OnInit {
   }
 
   async onSubmit() {
-    try {
-      const { error } = await this.channelApi.updateChannel(this.channel);
-      if (error) {
-        console.error('Update failed:', error);
-      } else {
-        console.log('Channel updated successfully');
-        this.onEditSuccess(this.channel);
-      }
-    } catch (err) {
-      console.error('Unexpected error updating channel:', err);
-    }
+  if (!this.channel?.id) {
+    console.error("Channel ID missing, cannot update");
+    return;
   }
 
-  onEditSuccess(channel:Channel){
-    this.onEditSuccessful.emit(channel);
+  try {
+    this.channel.updatedAt = new Date().toISOString();
+
+    // ✅ call service method for update + avatar
+    const updatedChannel = await this.channelApi.updateChannelWithAvatar(
+      this.channel,
+      this.selectedAvatarFile
+    );
+
+    console.log("✅ Channel updated successfully:", updatedChannel);
+    this.dialogRef.close(updatedChannel);
+
+  } catch (err) {
+    console.error("Unexpected error updating channel:", err);
+  }
+}
+
+
+  onCancel() {
+    this.dialogRef.close(this.originalChannel); // ✅ return old/original
   }
 }

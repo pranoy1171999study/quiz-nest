@@ -30,7 +30,7 @@ export const appRoutes: Route[] = [
       { path: '', component: HomeComponent },
       { path: 'create', component: QuizHomeComponent },
       { path: 'view', component: QuizViewHomeComponent },
-      { path: 'channels', component: ChannelHomeComponent },
+      { path: 'studio', component: ChannelHomeComponent },
     ],
   },
 

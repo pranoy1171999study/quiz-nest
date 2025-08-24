@@ -16,7 +16,7 @@ export class LoginComponent {
   error: string | null = null;
   loading = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(public authService: AuthService) {}
 
   async onSubmit() {
     this.loading = true;

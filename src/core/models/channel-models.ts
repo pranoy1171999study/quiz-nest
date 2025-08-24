@@ -25,7 +25,7 @@ export interface Channel {
 }
 
 export interface Playlist {
-  id: string; // uuid
+  id?: string; // uuid
   channelId: string; // references channels.id
 
   title: string;
@@ -38,8 +38,8 @@ export interface Playlist {
   isFeatured: boolean;
   isActive: boolean;
 
-  videoCount: number; // bigint
-  viewCount: number;  // bigint
+  quizCount: number;
+  viewCount: number; 
 
   position?: number | null;
 

@@ -5,6 +5,7 @@ import { AuthService } from '../../../auth/auth.service';
 import { User } from '@supabase/supabase-js';
 import { FormsModule } from '@angular/forms';
 import { ChannelApiService } from '../../../../services/channel-api-services';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-channel-create',
@@ -47,8 +48,9 @@ export class ChannelCreateComponent {
 
   handleAvailable: boolean | null = null;
   checkingHandle = false;
+  selectedAvatarFile: File | null = null;
 
-  constructor(private authService: AuthService, private channelService: ChannelApiService) {
+  constructor(private authService: AuthService, private channelService: ChannelApiService, private dialogRef: MatDialogRef<ChannelCreateComponent>) {
     this.authService.getUser().then((user) => {
       this.loggedinUser = user;
       this.channel.userId = user?.id;
@@ -59,10 +61,10 @@ export class ChannelCreateComponent {
     const input = e.target as HTMLInputElement;
     const file = input.files?.[0];
     if (!file) return;
+    this.selectedAvatarFile = file;  // keep the file
     const reader = new FileReader();
     reader.onload = () => (this.avatarPreview = reader.result as string);
     reader.readAsDataURL(file);
-    // If you also want to upload later, keep `file` around as needed.
   }
 
   applyKeywords() {
@@ -80,47 +82,20 @@ export class ChannelCreateComponent {
     }
 
     try {
-      // update timestamps
+      this.channel.userId = this.loggedinUser.id;
       this.channel.createdAt = new Date().toISOString();
       this.channel.updatedAt = new Date().toISOString();
 
-      // call service to insert
-      const { data, error } = await this.channelService.createChannel(this.channel);
+      const newChannel = await this.channelService.createChannelWithAvatar(this.channel, this.selectedAvatarFile);
 
-      if (error) {
-        console.error("Error creating channel:", error.message);
-        return;
-      }
+      console.log("✅ Channel created successfully:", newChannel);
+      this.dialogRef.close(newChannel);
 
-      console.log("Channel created successfully:", data);
-
-      // reset form
-      this.channel = {
-        userId: this.loggedinUser.id,
-        name: "",
-        description: "",
-        handle: "",
-        profilePictureUrl: "",
-        coverImageUrl: "",
-        keywords: [],
-        subscriberCount: 0,
-        quizCount: 0,
-        viewCount: 0,
-        isVerified: false,
-        isActive: true,
-        metadata: {},
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      };
-      this.avatarPreview = null;
-      this.keywordsInput = "";
-
-      // ✅ redirect or show toast if you want
-      // this.router.navigate(['/channels', data.id]);
     } catch (err) {
       console.error("Unexpected error creating channel:", err);
     }
   }
+
 
   async checkHandle() {
     if (!this.channel.handle) {
@@ -132,4 +107,7 @@ export class ChannelCreateComponent {
     this.checkingHandle = false;
   }
 
+  onClose() {
+    this.dialogRef.close();
+  }
 }

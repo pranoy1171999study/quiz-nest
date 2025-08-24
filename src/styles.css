@@ -1,13 +1,16 @@
 @import url('./styles/mathlive-fonts.css');
 @import url('./styles/mathlive-static.css');
+@import url('./styles/toastr.css');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
 .media-dialog-size {
   @apply w-[80vw] h-[80vh];
+}
+.mat-mdc-dialog-surface,.mdc-dialog__surface{
+    background-color: transparent !important;
 }
 
 .common-card-style {

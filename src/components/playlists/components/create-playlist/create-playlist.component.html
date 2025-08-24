@@ -5,14 +5,14 @@
     <!-- Header -->
     <div class="flex items-center justify-between">
         <h2 class="text-xl font-semibold text-zinc-900 dark:text-zinc-100">
-            Create Channel
+            Create Playlist
         </h2>
     </div>
 
     <!-- Profile Picture + File Input -->
     <div class="flex items-center gap-6">
         <label for="avatarInput" class="relative">
-            <img [src]="avatarPreview || channel.profilePictureUrl || defaultAvatar" alt="Profile"
+            <img [src]="avatarPreview || playlist.coverImageUrl || defaultAvatar" alt="Profile"
                 class="w-28 sm:w-28 aspect-square rounded-full object-cover ring-2 ring-zinc-200 dark:ring-zinc-700 cursor-pointer" />
             <span
                 class="absolute -bottom-2 -right-2 text-xs px-2 py-1 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 border border-zinc-200 dark:border-zinc-700">
@@ -31,7 +31,7 @@
     <!-- Name -->
     <div>
         <label class="block text-sm font-medium mb-1 text-zinc-800 dark:text-zinc-200">Name</label>
-        <input type="text" name="name" [(ngModel)]="channel.name" #name="ngModel" required minlength="3"
+        <input type="text" name="name" [(ngModel)]="playlist.title" #name="ngModel" required minlength="3"
             class="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 px-3 py-2 outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-white"
             placeholder="e.g., Quiz Nest" />
         <p *ngIf="name.invalid && (name.dirty || form.submitted)" class="mt-1 text-sm text-red-600">
@@ -41,47 +41,44 @@
     </div>
 
     <!-- Handle -->
-    <div>
+    <!-- <div>
         <label class="block text-sm font-medium mb-1 text-zinc-800 dark:text-zinc-200">Handle</label>
         <div
             class="flex rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 overflow-hidden">
             <span class="px-3 py-2 text-zinc-500 dark:text-zinc-400 select-none">&#64;</span>
-            <input type="text" name="handle" [(ngModel)]="channel.handle" #handle="ngModel" required
+            <input type="text" name="handle" [(ngModel)]="playlist.handle" #handle="ngModel" required
                 pattern="^[a-z0-9_]{3,20}$" (blur)="checkHandle()"
                 class="flex-1 px-3 py-2 outline-none bg-transparent text-zinc-900 dark:text-zinc-100"
                 placeholder="quiznest" />
         </div>
 
-        <!-- Validation help -->
         <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">3–20 chars, lowercase letters, numbers, underscores.
         </p>
 
-        <!-- Handle availability -->
         <div class="mt-1 text-sm">
             <span *ngIf="checkingHandle" class="text-zinc-500 dark:text-zinc-400">Checking...</span>
             <span *ngIf="handleAvailable === true" class="text-green-600">✅ Handle available</span>
             <span *ngIf="handleAvailable === false" class="text-red-600">❌ Already taken</span>
         </div>
 
-        <!-- Errors -->
         <p *ngIf="handle.invalid && (handle.dirty || form.submitted)" class="mt-1 text-sm text-red-600">
             <span *ngIf="handle.errors?.['required']">Handle is required.</span>
             <span *ngIf="handle.errors?.['pattern']">Invalid handle format.</span>
         </p>
-    </div>
+    </div> -->
 
 
     <!-- Description -->
     <div>
         <label class="block text-sm font-medium mb-1 text-zinc-800 dark:text-zinc-200">Description</label>
-        <textarea name="description" [(ngModel)]="channel.description" #description="ngModel" maxlength="300" rows="4"
+        <textarea name="description" [(ngModel)]="playlist.description" #description="ngModel" maxlength="300" rows="4"
             class="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 px-3 py-2 outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-white"
-            placeholder="Tell people what your channel is about…"></textarea>
+            placeholder="Tell people what your playlist is about…"></textarea>
         <div class="mt-1 flex justify-between text-xs">
             <span *ngIf="description.invalid && (description.dirty || form.submitted)" class="text-red-600">
                 Description is invalid.
             </span>
-            <span class="text-zinc-500 dark:text-zinc-400">{{ (channel.description?.length || 0) }}/300</span>
+            <span class="text-zinc-500 dark:text-zinc-400">{{ (playlist.description?.length || 0) }}/300</span>
         </div>
     </div>
 
@@ -93,7 +90,7 @@
             placeholder="quiz, math, aptitude"
             class="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 px-3 py-2 outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-white" />
         <div class="mt-2 flex flex-wrap gap-2">
-            <span *ngFor="let k of channel.keywords"
+            <span *ngFor="let k of playlist.keywords"
                 class="px-2 py-1 text-xs rounded-full border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-200">{{
                 k }}</span>
         </div>
