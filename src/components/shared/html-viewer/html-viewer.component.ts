@@ -8,7 +8,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
   templateUrl: './html-viewer.component.html',
   styleUrls: ['./html-viewer.component.css'],
   standalone: true,
-  encapsulation: ViewEncapsulation.ShadowDom
+  encapsulation: ViewEncapsulation.Emulated
 })
 export class HtmlViewerComponent {
   private _htmlContent: string | null = null;

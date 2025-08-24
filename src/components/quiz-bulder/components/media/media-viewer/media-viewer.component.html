@@ -41,6 +41,6 @@
         allowfullscreen>
     </iframe>
     <div *ngIf="media.type === MediaType.YOUTUBE"></div>
-    <div *ngIf="media.type === MediaType.HTML" [innerHtml]="safeHtml"
-        class="w-full h-full flex justify-center items-center bg-transparent text-black dark:text-white"></div>
+    <app-html-viewer *ngIf="media.type === MediaType.HTML" [htmlContent]="media.content"
+        class="w-full h-full flex justify-center items-center bg-transparent text-black dark:text-white"></app-html-viewer>
 </div>
