@@ -4,11 +4,12 @@ import { QuizHelperService } from '../../../quiz-helper-service';
 import { DomSanitizer, SafeHtml, SafeResourceUrl } from '@angular/platform-browser';
 import { MediaType } from '../../../../../core/models/enums';
 import { MediaItem } from '../../../../../core/models/media-models';
+import { HtmlViewerComponent } from "../../../../shared/html-viewer/html-viewer.component";
 
 @Component({
   selector: 'app-media-viewer',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HtmlViewerComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './media-viewer.component.html',
   styleUrl: './media-viewer.component.css'

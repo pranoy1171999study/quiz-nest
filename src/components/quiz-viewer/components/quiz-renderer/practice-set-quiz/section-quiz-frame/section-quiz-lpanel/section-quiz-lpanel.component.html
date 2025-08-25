@@ -1,0 +1,68 @@
+<div class="flex flex-col space-y-4 p-3 h-full 
+            bg-gray-100 dark:bg-slate-800 
+            text-gray-800 dark:text-gray-100">
+
+    <!-- Timer + Profile -->
+    <div class="flex items-center justify-between text-sm font-semibold">
+        <div class="flex items-center space-x-2">
+            <div class="w-12 h-12 rounded-full bg-gray-300 dark:bg-gray-700 overflow-hidden">
+                <img class="w-full h-full object-cover" [src]="showImageService.getInitialsImageUrl('User')" alt="">
+            </div>
+            <div class="flex flex-col">
+                <span class="text-gray-700 dark:text-gray-200">Time Left:</span>
+                <span class="text-red-600 dark:text-red-400 font-bold">24:50</span>
+            </div>
+        </div>
+        <!-- <button class="text-xs text-blue-600 dark:text-blue-400 flex items-center gap-1">
+      ⏸ Pause Test
+    </button> -->
+    </div>
+
+    <!-- Legend -->
+    <div class="space-y-2">
+        <h3 class="font-semibold text-gray-700 dark:text-gray-200">Legend</h3>
+        <div class="grid grid-cols-2 gap-2 text-xs">
+            <div class="flex items-center space-x-2">
+                <div class="w-6 h-6 rounded bg-green-500 text-white flex items-center justify-center text-xs">0</div>
+                <span class="text-gray-700 dark:text-gray-200">Answered</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <div class="w-6 h-6 rounded bg-red-500 text-white flex items-center justify-center text-xs">1</div>
+                <span class="text-gray-700 dark:text-gray-200">Not Answered</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <div class="w-6 h-6 rounded bg-purple-500 text-white flex items-center justify-center text-xs">0</div>
+                <span class="text-gray-700 dark:text-gray-200">Marked</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <div
+                    class="w-6 h-6 rounded bg-gray-400 dark:bg-gray-600 text-white flex items-center justify-center text-xs">
+                    24</div>
+                <span class="text-gray-700 dark:text-gray-200">Not Visited</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Question Palette -->
+    <div class="space-y-2 overflow-hidden">
+        <h3 class="font-semibold text-gray-700 dark:text-gray-200">You are viewing <span class="font-bold">VA</span>
+            section</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300">Question Palette:</p>
+
+        <div class="grid grid-cols-4 gap-2 overflow-y-auto" style="height: calc(100% - 65px); overflow-y: auto;">
+            <button *ngFor="let q of questions" class="w-10 h-10 rounded-md flex items-center justify-center font-semibold text-sm
+         border border-gray-300 dark:border-gray-600
+         hover:bg-blue-100 dark:hover:bg-blue-900
+         transition" [ngClass]="{
+    'bg-green-500 text-white': q.status === 'answered',
+    'bg-red-500 text-white': q.status === 'not-answered',
+    'bg-purple-500 text-white': q.status === 'marked',
+    'bg-gray-300 dark:bg-gray-600 text-white': q.status === 'not-visited',
+    'border-2 border-orange-500': q.active   
+  }">
+                {{ q.number }}
+            </button>
+
+        </div>
+    </div>
+</div>

@@ -11,6 +11,10 @@ export enum GameQuizPageType {
    */
   START_PAGE,
   /**
+   * Branding start page of Section
+   */
+  SECTION_START_PAGE,
+  /**
    * Render the section
    */
   SECTION_PAGE,
@@ -65,6 +69,13 @@ export class PracticeSetQuizComponent {
 
     // 2. Sections
     for (const sec of this.quizDetails.sections) {
+      //Section Starting Page
+      if (sec.disclaimer) {
+        this.pages.push({
+          pageType: GameQuizPageType.SECTION_START_PAGE,
+          data: sec.disclaimer
+        });
+      }
       this.pages.push({
         pageType: GameQuizPageType.SECTION_PAGE,
         data: sec
@@ -83,7 +94,6 @@ export class PracticeSetQuizComponent {
     this.currentPageIndex = index;
     const page = this.pages[this.currentPageIndex];
   }
-
 
   nextPage() {
     this.goToPage(this.currentPageIndex + 1);

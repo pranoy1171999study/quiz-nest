@@ -8,6 +8,7 @@ import { SignupComponent } from '../components/auth/sign-up/sign-up.component';
 import { LayoutComponent } from '../components/home-components/layout/layout.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { GuestGuard } from '../guards/guest.guard';
+import { SectionQuizFrameComponent } from '../components/quiz-viewer/components/quiz-renderer/practice-set-quiz/section-quiz-frame/section-quiz-frame.component';
 
 export const appRoutes: Route[] = [
   // Public (no navbar/sidebar)
@@ -31,6 +32,8 @@ export const appRoutes: Route[] = [
       { path: 'create', component: QuizHomeComponent },
       { path: 'view', component: QuizViewHomeComponent },
       { path: 'studio', component: ChannelHomeComponent },
+      //after development remove the route
+      { path: 'section-quiz-frame', component: SectionQuizFrameComponent },
     ],
   },
 

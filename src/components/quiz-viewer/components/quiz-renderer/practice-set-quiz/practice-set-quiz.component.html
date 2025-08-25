@@ -2,21 +2,12 @@
     <!-- Only show the current page -->
     <ng-container *ngIf="pages[currentPageIndex] as page" class="w-full h-full">
         <!-- START PAGE -->
-        <app-starting-page *ngIf="page.pageType === GameQuizPageType.START_PAGE" class="h-full w-full"
+        <app-starting-page *ngIf="page.pageType === GameQuizPageType.START_PAGE || page.pageType === GameQuizPageType.SECTION_START_PAGE" class="h-full w-full"
             [pageContent]="getHtmlMedia(page.data)" (start)="nextPage()">
         </app-starting-page>
-        <!-- Quiz Section-->
-         <app-section-quiz-frame [sectionData]="getQuizSection(page.data)"></app-section-quiz-frame>
 
-        <!-- <div *ngIf="page.pageType === GameQuizPageType.MAIN_QUESTION" class="h-full w-full">
-           <app-game-quiz-frame 
-                (previous)="goToPage(currentPageIndex-1)" 
-                (next)="goToPage(currentPageIndex+1)"
-                (skip)="goToPage(currentPageIndex+1)"
-                [remainingTime]="remainingTime" 
-                [question]="getQuizQuestion(page.data)" >
-            </app-game-quiz-frame>
-        </div> -->
+        <!-- Quiz Section-->
+         <app-section-quiz-frame [sectionData]="getQuizSection(page.data)" (onSubmit)="nextPage()"></app-section-quiz-frame>
 
         <!-- LAST PAGE -->
         <div *ngIf="page.pageType === GameQuizPageType.LAST_PAGE" class="h-full w-full">
